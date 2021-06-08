@@ -9,18 +9,18 @@ import (
 )
 
 type Message struct {
-	Id int
-	Message string
-	From int
-	To int
-	SendAt time.Time
+	Id         int
+	Message    string
+	From       int
+	To         int
+	SendAt     time.Time
 	ReceivedAt time.Time
 }
 
-type MessageSerializer struct {}
+type MessageSerializer struct{}
 
 type User struct {
-	Id int
+	Id   int
 	name string
 }
 
@@ -50,11 +50,11 @@ func (serializer *MessageSerializer) Serialize(message public.FileEntity) string
 func (serializer *MessageSerializer) Deserialize(target string) public.FileEntity {
 	data := strings.Split(target, ", ")
 	return &Message{
-		Id: public.ParseInt(data[0]),
-		Message: data[1],
-		From: public.ParseInt(data[2]),
-		To: public.ParseInt(data[3]),
-		SendAt: public.ParseDatetime(data[4]),
+		Id:         public.ParseInt(data[0]),
+		Message:    data[1],
+		From:       public.ParseInt(data[2]),
+		To:         public.ParseInt(data[3]),
+		SendAt:     public.ParseDatetime(data[4]),
 		ReceivedAt: public.ParseDatetime(data[5]),
 	}
 }

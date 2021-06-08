@@ -1,10 +1,10 @@
 package public
 
 import (
-	"os"
 	"errors"
-	"strings"
 	"io/ioutil"
+	"os"
+	"strings"
 )
 
 type FileEntity interface {
@@ -18,20 +18,19 @@ type FileEntitySerializer interface {
 }
 
 type FileRepository struct {
-	FileName string
+	FileName   string
 	Serializer FileEntitySerializer
 }
 
 func (repository *FileRepository) Save(entity FileEntity) error {
-
 	f, err := os.OpenFile(repository.FileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
-			return err
+		return err
 	}
 	defer f.Close()
 
 	if _, err = f.WriteString(repository.Serializer.Serialize(entity)); err != nil {
-			return err
+		return err
 	}
 	return nil
 }
@@ -62,6 +61,6 @@ func (repository *FileRepository) FindById(id int) (FileEntity, error) {
 			return entity, nil
 		}
 	}
-	
+
 	return nil, errors.New("Not Found")
 }

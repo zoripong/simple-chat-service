@@ -19,7 +19,7 @@ func ParseDatetime(target string) time.Time {
 	result, err := time.Parse(dateTimeFormat, target)
 
 	if err != nil {
-			return time.Now()
+		return time.Now()
 	}
 	return result
 }
