@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-mongo/message"
+	"simple-chat-service/message"
 )
 
 func main() {

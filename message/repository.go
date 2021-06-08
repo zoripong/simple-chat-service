@@ -1,9 +1,8 @@
-// MessageRepository
 package message
 
 import (
 	"sync"
-	"go-gin-mongo/public"
+	"simple-chat-service/public"
 )
  
 var instance *public.FileRepository

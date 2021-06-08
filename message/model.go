@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"go-gin-mongo/public"
+	"simple-chat-service/public"
 )
 
 type Message struct {

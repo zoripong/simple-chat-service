@@ -1,4 +1,4 @@
-module go-gin-mongo
+module simple-chat-service
 
 go 1.13
 
