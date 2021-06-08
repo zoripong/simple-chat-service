@@ -8,10 +8,10 @@ import (
 )
 
 type SendMessageData struct {
-	Id	int
-	Message	string
-	From int
-	To int
+	Id      int
+	Message string
+	From    int
+	To      int
 }
 
 type MessageService struct {

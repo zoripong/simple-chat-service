@@ -2,7 +2,7 @@ package message
 
 import (
 	"sync"
-	
+
 	"simple-chat-service/public"
 )
 
