@@ -6,15 +6,15 @@ import (
 	"simple-chat-service/public"
 )
 
-var instance *public.FileRepository
-var once sync.Once
+var repository *public.FileRepository
+var repositorySync sync.Once
 
 func GetMessageRespository() *public.FileRepository {
-	once.Do(func() {
-		instance = &public.FileRepository{
+	repositorySync.Do(func() {
+		repository = &public.FileRepository{
 			FileName:   "message.txt",
 			Serializer: &MessageSerializer{},
 		}
 	})
-	return instance
+	return repository
 }

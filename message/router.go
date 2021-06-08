@@ -1,7 +1,6 @@
 package message
 
 import (
-	"time"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,20 +20,17 @@ func RegisterMessageRouter(router *gin.RouterGroup) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		// FIXME service 거쳐서 저장할 수 있게끔 수정해야 함
-		repository := GetMessageRespository()
-		repository.Save(
-			&Message{
-				Id:         request.Id,
-				Message:    request.Message,
-				From:       request.From,
-				To:         request.To,
-				SendAt:     time.Now(),
-				ReceivedAt: time.Now(),
+		service := GetMessageService()
+		service.SendMessage(
+			&SendMessageData{
+				Id: request.Id,
+				Message: request.Message,
+				From: request.From,
+				To: request.To,
 			},
 		)
 		c.JSON(200, gin.H{
-			"sentAt": time.Now(),
+			"success": true,
 		})
 	})
 }
