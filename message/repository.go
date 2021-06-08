@@ -1,8 +1,9 @@
 package message
 
 import (
-	"simple-chat-service/public"
 	"sync"
+	
+	"simple-chat-service/public"
 )
 
 var instance *public.FileRepository
