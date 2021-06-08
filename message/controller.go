@@ -1,21 +1,33 @@
 package message
 
 import (
-	"github.com/gin-gonic/gin"
 	"time"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
+type SendMessageBody struct {
+	Id	int `json:"id" binding:"required"`
+	Message	string `json:"message" binding:"required"`
+	From int `json:"from" binding:"required"`
+	To int `json:"to" binding:"required"`
+}
+
 func SendMessage(c *gin.Context) {
+	var request SendMessageBody
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// FIXME service 거쳐서 저장할 수 있게끔 수정해야 함
 	repository := GetMessageRespository()
-	// FIXME
-	// request body를 통해 메시지 저장할 수 있도록 수정해야 함
-	// service 거쳐서 저장할 수 있게끔 수정해야 함
 	repository.Save(
 		&Message{
-			Id:         1,
-			Message:    "Hi!",
-			From:       2,
-			To:         3,
+			Id:         request.Id,
+			Message:    request.Message,
+			From:       request.From,
+			To:         request.To,
 			SendAt:     time.Now(),
 			ReceivedAt: time.Now(),
 		},
