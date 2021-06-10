@@ -12,7 +12,7 @@ type FileEntity interface {
 
 type FileEntitySerializer interface {
 	Serialize(target FileEntity) string
-	Deserialize(target string) FileEntity
+	Deserialize(target string) interface{}
 }
 
 type FileRepository struct {
@@ -33,15 +33,18 @@ func (repository *FileRepository) Save(entity FileEntity) error {
 	return nil
 }
 
-func (repository *FileRepository) GetAll() (*[]FileEntity, error) {
+func (repository *FileRepository) GetAll() (*[]interface{}, error) {
 	body, err := ioutil.ReadFile(repository.FileName)
 	if err != nil {
 		return nil, err
 	}
 
-	entities := []FileEntity{}
+	entities := []interface{}{}
 	rows := strings.Split(string(body), "\n")
 	for _, row := range rows {
+		if row == "" {
+			continue
+		}
 		entities = append(entities, repository.Serializer.Deserialize(row))
 	}
 	return &entities, nil

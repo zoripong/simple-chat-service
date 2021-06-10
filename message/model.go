@@ -40,8 +40,12 @@ func (serializer *MessageSerializer) Serialize(message public.FileEntity) string
 	return message.Serialize()
 }
 
-func (serializer *MessageSerializer) Deserialize(target string) public.FileEntity {
+func (serializer *MessageSerializer) Deserialize(target string) interface{} {
 	data := strings.Split(target, ", ")
+	if len(data) < 6 {
+		public.GetWarningLogger().Printf("(%s) is invalid row.\n", target)
+		return nil
+	}
 	return &Message{
 		Id:         public.ParseInt(data[0]),
 		Message:    data[1],
