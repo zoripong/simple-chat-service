@@ -27,25 +27,17 @@ func GetMessageRepository() *MessageRepository {
 
 func (repo *MessageRepository) GetMessages(from, to int) *[]Message {
 	entities, err := repo.GetAll()
-
 	if err != nil {
 		return nil
 	}
-
-	messages := []Message{}
+	targets := []Message{}
 	for _, entity := range *entities {
 		switch v := entity.(type) {
 		case *Message:
-			messages = append(messages, *v)
+			if v.CompareByUser(from, to) {
+				targets = append(targets, *v)
+			}
 		}
 	}
-
-	targets := []Message{}
-	for _, message := range messages {
-		if message.CompareByUser(from, to) {
-			targets = append(targets, message)
-		}
-	}
-
 	return &targets
 }
