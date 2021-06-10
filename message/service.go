@@ -40,3 +40,7 @@ func (service *MessageService) SendMessage(data *SendMessageData) {
 		},
 	)
 }
+
+func (service *MessageService) GetMessages(from, to int) *[]Message {
+	return service.repository.GetMessages(from, to)
+}

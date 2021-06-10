@@ -19,13 +19,16 @@ type SendMessageBody struct {
 }
 
 func RegisterMessageRouter(router *gin.RouterGroup) {
+	service := GetMessageService()
+
 	router.GET("/", func(c *gin.Context) {
 		var param GetMessagesParam
 		if err := c.BindQuery(&param); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		c.String(http.StatusOK, "Message sent to %d from %d", param.To, param.From)
+		messages := service.GetMessages(param.From, param.To)
+		c.JSON(200, messages)
 	})
 
 	router.POST("/", func(c *gin.Context) {
@@ -34,7 +37,6 @@ func RegisterMessageRouter(router *gin.RouterGroup) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		service := GetMessageService()
 		service.SendMessage(
 			&SendMessageData{
 				Id:      request.Id,
