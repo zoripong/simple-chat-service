@@ -36,6 +36,13 @@ func (message *Message) Serialize() string {
 	)
 }
 
+func (message *Message) CompareByUser(from, to int) bool {
+	if message.From == from && message.To == to {
+		return true
+	}
+	return false
+}
+
 func (serializer *MessageSerializer) Serialize(message public.FileEntity) string {
 	return message.Serialize()
 }
