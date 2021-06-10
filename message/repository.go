@@ -6,14 +6,20 @@ import (
 	"simple-chat-service/public"
 )
 
-var repository *public.FileRepository
+var repository *MessageRepository
 var repositorySync sync.Once
 
-func GetMessageRespository() *public.FileRepository {
+type MessageRepository struct {
+	public.FileRepository
+}
+
+func GetMessageRepository() *MessageRepository {
 	repositorySync.Do(func() {
-		repository = &public.FileRepository{
-			FileName:   "message.txt",
-			Serializer: &MessageSerializer{},
+		repository = &MessageRepository{
+			public.FileRepository{
+				FileName:   "message.txt",
+				Serializer: &MessageSerializer{},
+			},
 		}
 	})
 	return repository

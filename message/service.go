@@ -3,8 +3,6 @@ package message
 import (
 	"sync"
 	"time"
-
-	"simple-chat-service/public"
 )
 
 type SendMessageData struct {
@@ -15,7 +13,7 @@ type SendMessageData struct {
 }
 
 type MessageService struct {
-	repository *public.FileRepository
+	repository *MessageRepository
 }
 
 var service *MessageService
@@ -24,7 +22,7 @@ var serviceSync sync.Once
 func GetMessageService() *MessageService {
 	serviceSync.Do(func() {
 		service = &MessageService{
-			repository: GetMessageRespository(),
+			repository: GetMessageRepository(),
 		}
 	})
 	return service
