@@ -1,14 +1,12 @@
 package public
 
 import (
-	"errors"
 	"io/ioutil"
 	"os"
 	"strings"
 )
 
 type FileEntity interface {
-	EqualsId(id int) bool
 	Serialize() string
 }
 
@@ -47,20 +45,4 @@ func (repository *FileRepository) GetAll() (*[]FileEntity, error) {
 		entities = append(entities, repository.Serializer.Deserialize(row))
 	}
 	return &entities, nil
-}
-
-func (repository *FileRepository) FindById(id int) (FileEntity, error) {
-	entities, err := repository.GetAll()
-
-	if err != nil {
-		return nil, err
-	}
-
-	for _, entity := range *entities {
-		if entity.EqualsId(id) {
-			return entity, nil
-		}
-	}
-
-	return nil, errors.New("Not Found")
 }

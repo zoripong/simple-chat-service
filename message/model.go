@@ -24,13 +24,6 @@ type User struct {
 	name string
 }
 
-func (message *Message) EqualsId(id int) bool {
-	if message.Id == id {
-		return true
-	}
-	return false
-}
-
 func (message *Message) Serialize() string {
 	return fmt.Sprintf(
 		"%d, %s, %d, %d, %s, %s\n",
