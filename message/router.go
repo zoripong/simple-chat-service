@@ -8,7 +8,7 @@ import (
 
 type GetMessagesParam struct {
 	From int `form:"from" binding:"required"`
-	To int `form:"to" binding:"required"`
+	To   int `form:"to" binding:"required"`
 }
 
 type SendMessageBody struct {
