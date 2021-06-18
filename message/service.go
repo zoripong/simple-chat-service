@@ -44,6 +44,8 @@ func (service *MessageService) SendMessage(data *SendMessageData) {
 	service.repository.Save(&message)
 
 	pushClient := push.NewPushClient()
+
+	// NOTE: 각각의 HTTP request는 이미 별도의 고루틴에서 돌고있기 때문에 해당 함수를 goroutine에서 처리하지 않아도 된다.
 	result := pushClient.SendPushInstantly(
 		&push.PushMessage{
 			Content:    message.Message,
