@@ -3,6 +3,9 @@ package message
 import (
 	"sync"
 	"time"
+
+	"simple-chat-service/public"
+	"simple-chat-service/push"
 )
 
 type SendMessageData struct {
@@ -14,6 +17,7 @@ type SendMessageData struct {
 
 type MessageService struct {
 	repository *MessageRepository
+	pushClient *push.PushClient
 }
 
 var service *MessageService
@@ -29,16 +33,26 @@ func GetMessageService() *MessageService {
 }
 
 func (service *MessageService) SendMessage(data *SendMessageData) {
-	service.repository.Save(
-		&Message{
-			Id:         data.Id,
-			Message:    data.Message,
-			From:       data.From,
-			To:         data.To,
-			SendAt:     time.Now(),
-			ReceivedAt: time.Now(),
+	message := Message{
+		Id:         data.Id,
+		Message:    data.Message,
+		From:       data.From,
+		To:         data.To,
+		SendAt:     time.Now(),
+		ReceivedAt: time.Now(),
+	}
+	service.repository.Save(&message)
+
+	pushClient := push.NewPushClient()
+	result := pushClient.SendPushInstantly(
+		&push.PushMessage{
+			Content:    message.Message,
+			SenderName: "보내는이",
+			ReceiverId: int64(message.To),
+			SendAt:     message.SendAt,
 		},
 	)
+	public.GetInfoLogger().Printf("Push Message Reulst: %t\n", result)
 }
 
 func (service *MessageService) GetMessages(from, to int) *[]Message {
