@@ -3,7 +3,7 @@ package message
 import (
 	"sync"
 
-	"simple-chat-service/public"
+	"github.com/zoripong/simple-chat-service/public"
 )
 
 var repository *MessageRepository

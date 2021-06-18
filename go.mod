@@ -1,4 +1,4 @@
-module simple-chat-service
+module github.com/zoripong/simple-chat-service
 
 go 1.13
 

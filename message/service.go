@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"simple-chat-service/public"
-	"simple-chat-service/push"
+	"github.com/zoripong/simple-chat-service/public"
+	"github.com/zoripong/simple-chat-service/push"
 )
 
 type SendMessageData struct {

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"simple-chat-service/public"
+	"github.com/zoripong/simple-chat-service/public"
 )
 
 type Message struct {
