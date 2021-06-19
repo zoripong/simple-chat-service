@@ -17,7 +17,6 @@ type SendMessageData struct {
 
 type MessageService struct {
 	repository *MessageRepository
-	pushClient *push.PushClient
 }
 
 var service *MessageService
