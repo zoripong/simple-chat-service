@@ -19,11 +19,6 @@ type Message struct {
 
 type MessageSerializer struct{}
 
-type User struct {
-	Id   int
-	name string
-}
-
 func (message *Message) Serialize() string {
 	return fmt.Sprintf(
 		"%d, %s, %d, %d, %s, %s\n",
