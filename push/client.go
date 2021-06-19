@@ -32,15 +32,6 @@ func NewPushClient() *PushClient {
 	return &client
 }
 
-func (client *PushClient) ToPushInstantlyReuest(message *PushMessage) *rpc.PushInstantlyRequest {
-	return &rpc.PushInstantlyRequest{
-		Content:    message.Content,
-		SenderId:   message.SenderId,
-		ReceiverId: message.ReceiverId,
-		SendAt:     message.SendAt.Unix(),
-	}
-}
-
 func (client *PushClient) SendPushInstantly(message *PushMessage) bool {
 	defer client.Connection.Close()
 
@@ -49,7 +40,7 @@ func (client *PushClient) SendPushInstantly(message *PushMessage) bool {
 
 	r, err := client.PushInstantly(
 		ctx,
-		client.ToPushInstantlyReuest(message),
+		message.ToPushInstantlyReuest(),
 	)
 
 	if err != nil {
