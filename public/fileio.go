@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-type FileEntity interface {
+type Serializable interface {
 	Serialize() string
 }
 
 type FileEntitySerializer interface {
-	Serialize(target FileEntity) string
+	Serialize(target Serializable) string
 	Deserialize(target string) interface{}
 }
 
@@ -20,7 +20,7 @@ type FileRepository struct {
 	Serializer FileEntitySerializer
 }
 
-func (repository *FileRepository) Save(entity FileEntity) error {
+func (repository *FileRepository) Save(entity Serializable) error {
 	f, err := os.OpenFile(repository.FileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		return err

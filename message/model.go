@@ -38,7 +38,7 @@ func (message *Message) CompareByUser(from, to int) bool {
 
 type MessageSerializer struct{}
 
-func (serializer *MessageSerializer) Serialize(message public.FileEntity) string {
+func (serializer *MessageSerializer) Serialize(message public.Serializable) string {
 	return message.Serialize()
 }
 
