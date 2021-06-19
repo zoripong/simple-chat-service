@@ -7,3 +7,7 @@
 ```
 go run main.go
 ```
+
+## related repository
+- schema: https://github.com/zoripong/push-schema
+- server: https://github.com/zoripong/simple-push-service
