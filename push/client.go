@@ -2,9 +2,9 @@ package push
 
 import (
 	"context"
-	"log"
 	"time"
 
+	"github.com/zoripong/simple-chat-service/public"
 	"github.com/zoripong/simple-chat-service/rpc"
 	"google.golang.org/grpc"
 )
@@ -22,7 +22,7 @@ func NewPushClient() *PushClient {
 	address := "localhost:50051"
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		public.GetErrorLogger().Printf("did not connect: %v\n", err)
 	}
 	serviceClient := rpc.NewPushServiceClient(conn)
 	client := PushClient{
@@ -53,7 +53,7 @@ func (client *PushClient) SendPushInstantly(message *PushMessage) bool {
 	)
 
 	if err != nil {
-		log.Fatalf("could not send push: %v", err)
+		public.GetErrorLogger().Printf("could not send push: %v\n", err)
 		return false
 	}
 
