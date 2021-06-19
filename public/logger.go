@@ -16,3 +16,7 @@ func GetWarningLogger() *Logger {
 func GetInfoLogger() *Logger {
 	return &Logger{log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime|log.Lshortfile)}
 }
+
+func GetErrorLogger() *Logger {
+	return &Logger{log.New(os.Stderr, "[ERROR] ", log.Ldate|log.Ltime|log.Lshortfile)}
+}
