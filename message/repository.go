@@ -26,8 +26,10 @@ func GetMessageRepository() *MessageRepository {
 }
 
 func (repo *MessageRepository) GetMessages(from, to int) *[]Message {
+	errorLogger := public.GetErrorLogger()
 	entities, err := repo.GetAll()
 	if err != nil {
+		errorLogger.Printf("Cannot read message files: %s\n", err)
 		return nil
 	}
 	targets := []Message{}
@@ -37,6 +39,8 @@ func (repo *MessageRepository) GetMessages(from, to int) *[]Message {
 			if v.CompareByUser(from, to) {
 				targets = append(targets, *v)
 			}
+		default:
+			errorLogger.Printf("%s is not message", v)
 		}
 	}
 	return &targets
