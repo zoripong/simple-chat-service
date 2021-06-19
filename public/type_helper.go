@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const dateTimeFormat = "2000-01-01T00:00:00.000Z"
+const dateTimeFormat = "Mon Jan 2 15:04:05 -0700 MST 2006"
 
 func ParseInt(target string) int {
 	result, err := strconv.Atoi(target)
