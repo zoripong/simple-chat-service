@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"google.golang.org/grpc"
 	"github.com/zoripong/simple-chat-service/rpc"
+	"google.golang.org/grpc"
 )
 
 type PushClient struct {
