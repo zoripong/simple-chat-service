@@ -17,8 +17,6 @@ type Message struct {
 	ReceivedAt time.Time
 }
 
-type MessageSerializer struct{}
-
 func (message *Message) Serialize() string {
 	return fmt.Sprintf(
 		"%d, %s, %d, %d, %s, %s\n",
@@ -37,6 +35,8 @@ func (message *Message) CompareByUser(from, to int) bool {
 	}
 	return false
 }
+
+type MessageSerializer struct{}
 
 func (serializer *MessageSerializer) Serialize(message public.FileEntity) string {
 	return message.Serialize()
