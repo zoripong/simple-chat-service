@@ -49,7 +49,7 @@ func (service *MessageService) SendMessage(data *SendMessageData) {
 	result := pushClient.SendPushInstantly(
 		&push.PushMessage{
 			Content:    message.Message,
-			SenderName: "보내는이",
+			SenderId:   int64(message.From),
 			ReceiverId: int64(message.To),
 			SendAt:     message.SendAt,
 		},

@@ -6,7 +6,7 @@ import (
 
 type PushMessage struct {
 	Content    string
-	SenderName string
+	SenderId   int64
 	ReceiverId int64
 	SendAt     time.Time
 }

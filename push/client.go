@@ -35,7 +35,7 @@ func NewPushClient() *PushClient {
 func (client *PushClient) ToPushInstantlyReuest(message *PushMessage) *rpc.PushInstantlyRequest {
 	return &rpc.PushInstantlyRequest{
 		Content:    message.Content,
-		SenderName: message.SenderName,
+		SenderId:   message.SenderId,
 		ReceiverId: message.ReceiverId,
 		SendAt:     message.SendAt.Unix(),
 	}
