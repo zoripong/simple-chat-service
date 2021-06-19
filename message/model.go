@@ -17,18 +17,6 @@ type Message struct {
 	ReceivedAt time.Time
 }
 
-func (message *Message) Serialize() string {
-	return fmt.Sprintf(
-		"%d, %s, %d, %d, %s, %s\n",
-		message.Id,
-		message.Message,
-		message.From,
-		message.To,
-		public.DatetimeToString(&message.SendAt),
-		public.DatetimeToString(&message.ReceivedAt),
-	)
-}
-
 func (message *Message) CompareByUser(from, to int) bool {
 	if message.From == from && message.To == to {
 		return true
@@ -38,8 +26,21 @@ func (message *Message) CompareByUser(from, to int) bool {
 
 type MessageSerializer struct{}
 
-func (serializer *MessageSerializer) Serialize(message public.Serializable) string {
-	return message.Serialize()
+func (serializer *MessageSerializer) Serialize(entity interface{}) string {
+	message, ok := entity.(Message)
+	if !ok {
+		public.GetErrorLogger().Printf("%s is not message.\n", entity)
+		return ""
+	}
+	return fmt.Sprintf(
+		"%d, %s, %d, %d, %s, %s\n",
+		message.Id,
+		message.Message,
+		message.From,
+		message.To,
+		public.DatetimeToString(&message.SendAt),
+		public.DatetimeToString(&message.ReceivedAt),
+	)
 }
 
 func (serializer *MessageSerializer) Deserialize(target string) interface{} {

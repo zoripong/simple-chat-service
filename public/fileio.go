@@ -7,27 +7,31 @@ import (
 )
 
 type Serializable interface {
-	Serialize() string
+	Serialize(interface{}) string
 }
 
-type FileEntitySerializer interface {
-	Serialize(target Serializable) string
+type Deserializable interface {
 	Deserialize(target string) interface{}
 }
 
-type FileRepository struct {
-	FileName   string
-	Serializer FileEntitySerializer
+type Serializer interface {
+	Serializable
+	Deserializable
 }
 
-func (repository *FileRepository) Save(entity Serializable) error {
+type FileRepository struct {
+	FileName string
+	Serializer
+}
+
+func (repository *FileRepository) Save(entity interface{}) error {
 	f, err := os.OpenFile(repository.FileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	if _, err = f.WriteString(repository.Serializer.Serialize(entity)); err != nil {
+	if _, err = f.WriteString(repository.Serialize(entity)); err != nil {
 		return err
 	}
 	return nil
